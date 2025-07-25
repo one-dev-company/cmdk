@@ -21,10 +21,12 @@ type LoadingProps = DivProps & {
 }
 
 type EmptyProps = DivProps & {}
+
 type SeparatorProps = DivProps & {
   /** Whether this separator should always be rendered. Useful if you disable automatic filtering. */
   alwaysRender?: boolean
 }
+
 type DialogProps = RadixDialog.DialogProps &
   CommandProps & {
     /** Provide a className to the Dialog overlay. */
@@ -34,12 +36,14 @@ type DialogProps = RadixDialog.DialogProps &
     /** Provide a custom element the Dialog should portal into. */
     container?: HTMLElement
   }
+
 type ListProps = DivProps & {
   /**
    * Accessible label for this List of suggestions. Not shown visibly.
    */
   label?: string
 }
+
 type ItemProps = Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
   /** Whether this item is currently disabled. */
   disabled?: boolean
@@ -55,6 +59,7 @@ type ItemProps = Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
   /** Whether this item is forcibly rendered regardless of filtering. */
   forceMount?: boolean
 }
+
 type GroupProps = Omit<DivProps, 'heading' | 'value'> & {
   /** Optional heading to render for this group. */
   heading?: React.ReactNode
@@ -63,6 +68,7 @@ type GroupProps = Omit<DivProps, 'heading' | 'value'> & {
   /** Whether this group is forcibly rendered regardless of filtering. */
   forceMount?: boolean
 }
+
 type InputProps = Omit<
   React.ComponentPropsWithoutRef<typeof Primitive.input>,
   'value' | 'onChange' | 'type'
@@ -76,11 +82,13 @@ type InputProps = Omit<
    */
   onValueChange?: (search: string) => void
 }
+
 type CommandFilter = (
   value: string,
   search: string,
   keywords?: string[],
 ) => number
+
 type CommandProps = DivProps & {
   /**
    * Accessible label for this command menu. Not shown visibly.
@@ -137,18 +145,21 @@ type Context = {
   // Refs
   listInnerRef: React.RefObject<HTMLDivElement | null>
 }
+
 type State = {
   search: string
   value: string
   selectedItemId?: string
   filtered: { count: number; items: Map<string, number>; groups: Set<string> }
 }
+
 type Store = {
   subscribe: (callback: () => void) => () => void
   snapshot: () => State
   setState: <K extends keyof State>(key: K, value: State[K], opts?: any) => void
   emit: () => void
 }
+
 type Group = {
   id: string
   forceMount?: boolean
