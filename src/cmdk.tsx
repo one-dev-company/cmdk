@@ -428,19 +428,19 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
         .forEach((item) => {
           const group = item.closest(GROUP_ITEMS_SELECTOR)
 
-          if (group) {
-            group.appendChild(
-              item.parentElement === group
+          function appendElementOrItsParent(element: Element | null) {
+            const el =
+              item.parentElement === element
                 ? item
-                : item.closest(`${GROUP_ITEMS_SELECTOR} > *`),
-            )
-          } else {
-            listInsertionElement.appendChild(
-              item.parentElement === listInsertionElement
-                ? item
-                : item.closest(`${GROUP_ITEMS_SELECTOR} > *`),
-            )
+                : item.closest(`${GROUP_ITEMS_SELECTOR} > *`)
+            if (el) {
+              element?.appendChild(el)
+            }
           }
+
+          !!group
+            ? appendElementOrItsParent(group)
+            : appendElementOrItsParent(listInsertionElement)
         })
 
       groups
