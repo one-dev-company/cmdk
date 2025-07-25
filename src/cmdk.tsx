@@ -939,7 +939,7 @@ const List = React.forwardRef<HTMLDivElement, ListProps>(
       if (height.current && ref.current) {
         const el = height.current
         const wrapper = ref.current
-        let animationFrame
+        let animationFrame: number = 0
         const observer = new ResizeObserver(() => {
           animationFrame = requestAnimationFrame(() => {
             const height = el.offsetHeight
