@@ -9,20 +9,18 @@ import { Primitive } from '@radix-ui/react-primitive'
 
 import { commandScore } from './command-score'
 
-type Children = { children?: React.ReactNode }
 type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
 
-type LoadingProps = Children &
-  DivProps & {
-    /** Estimated progress of loading asynchronous options. */
-    progress?: number
-    /**
-     * Accessible label for this loading progressbar. Not shown visibly.
-     */
-    label?: string
-  }
+type LoadingProps = DivProps & {
+  /** Estimated progress of loading asynchronous options. */
+  progress?: number
+  /**
+   * Accessible label for this loading progressbar. Not shown visibly.
+   */
+  label?: string
+}
 
-type EmptyProps = Children & DivProps & {}
+type EmptyProps = DivProps & {}
 type SeparatorProps = DivProps & {
   /** Whether this separator should always be rendered. Useful if you disable automatic filtering. */
   alwaysRender?: boolean
@@ -36,38 +34,35 @@ type DialogProps = RadixDialog.DialogProps &
     /** Provide a custom element the Dialog should portal into. */
     container?: HTMLElement
   }
-type ListProps = Children &
-  DivProps & {
-    /**
-     * Accessible label for this List of suggestions. Not shown visibly.
-     */
-    label?: string
-  }
-type ItemProps = Children &
-  Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
-    /** Whether this item is currently disabled. */
-    disabled?: boolean
-    /** Event handler for when this item is selected, either via click or keyboard selection. */
-    onSelect?: (value: string) => void
-    /**
-     * A unique value for this item.
-     * If no value is provided, it will be inferred from `children` or the rendered `textContent`. If your `textContent` changes between renders, you _must_ provide a stable, unique `value`.
-     */
-    value?: string
-    /** Optional keywords to match against when filtering. */
-    keywords?: string[]
-    /** Whether this item is forcibly rendered regardless of filtering. */
-    forceMount?: boolean
-  }
-type GroupProps = Children &
-  Omit<DivProps, 'heading' | 'value'> & {
-    /** Optional heading to render for this group. */
-    heading?: React.ReactNode
-    /** If no heading is provided, you must provide a value that is unique for this group. */
-    value?: string
-    /** Whether this group is forcibly rendered regardless of filtering. */
-    forceMount?: boolean
-  }
+type ListProps = DivProps & {
+  /**
+   * Accessible label for this List of suggestions. Not shown visibly.
+   */
+  label?: string
+}
+type ItemProps = Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
+  /** Whether this item is currently disabled. */
+  disabled?: boolean
+  /** Event handler for when this item is selected, either via click or keyboard selection. */
+  onSelect?: (value: string) => void
+  /**
+   * A unique value for this item.
+   * If no value is provided, it will be inferred from `children` or the rendered `textContent`. If your `textContent` changes between renders, you _must_ provide a stable, unique `value`.
+   */
+  value?: string
+  /** Optional keywords to match against when filtering. */
+  keywords?: string[]
+  /** Whether this item is forcibly rendered regardless of filtering. */
+  forceMount?: boolean
+}
+type GroupProps = Omit<DivProps, 'heading' | 'value'> & {
+  /** Optional heading to render for this group. */
+  heading?: React.ReactNode
+  /** If no heading is provided, you must provide a value that is unique for this group. */
+  value?: string
+  /** Whether this group is forcibly rendered regardless of filtering. */
+  forceMount?: boolean
+}
 type InputProps = Omit<
   React.ComponentPropsWithoutRef<typeof Primitive.input>,
   'value' | 'onChange' | 'type'
@@ -86,48 +81,47 @@ type CommandFilter = (
   search: string,
   keywords?: string[],
 ) => number
-type CommandProps = Children &
-  DivProps & {
-    /**
-     * Accessible label for this command menu. Not shown visibly.
-     */
-    label?: string
-    /**
-     * Optionally set to `false` to turn off the automatic filtering and sorting.
-     * If `false`, you must conditionally render valid items based on the search query yourself.
-     */
-    shouldFilter?: boolean
-    /**
-     * Custom filter function for whether each command menu item should matches the given search query.
-     * It should return a number between 0 and 1, with 1 being the best match and 0 being hidden entirely.
-     * By default, uses the `command-score` library.
-     */
-    filter?: CommandFilter
-    /**
-     * Optional default item value when it is initially rendered.
-     */
-    defaultValue?: string
-    /**
-     * Optional controlled state of the selected command menu item.
-     */
-    value?: string
-    /**
-     * Event handler called when the selected item of the menu changes.
-     */
-    onValueChange?: (value: string) => void
-    /**
-     * Optionally set to `true` to turn on looping around when using the arrow keys.
-     */
-    loop?: boolean
-    /**
-     * Optionally set to `true` to disable selection via pointer events.
-     */
-    disablePointerSelection?: boolean
-    /**
-     * Set to `false` to disable ctrl+n/j/p/k shortcuts. Defaults to `true`.
-     */
-    vimBindings?: boolean
-  }
+type CommandProps = DivProps & {
+  /**
+   * Accessible label for this command menu. Not shown visibly.
+   */
+  label?: string
+  /**
+   * Optionally set to `false` to turn off the automatic filtering and sorting.
+   * If `false`, you must conditionally render valid items based on the search query yourself.
+   */
+  shouldFilter?: boolean
+  /**
+   * Custom filter function for whether each command menu item should matches the given search query.
+   * It should return a number between 0 and 1, with 1 being the best match and 0 being hidden entirely.
+   * By default, uses the `command-score` library.
+   */
+  filter?: CommandFilter
+  /**
+   * Optional default item value when it is initially rendered.
+   */
+  defaultValue?: string
+  /**
+   * Optional controlled state of the selected command menu item.
+   */
+  value?: string
+  /**
+   * Event handler called when the selected item of the menu changes.
+   */
+  onValueChange?: (value: string) => void
+  /**
+   * Optionally set to `true` to turn on looping around when using the arrow keys.
+   */
+  loop?: boolean
+  /**
+   * Optionally set to `true` to disable selection via pointer events.
+   */
+  disablePointerSelection?: boolean
+  /**
+   * Set to `false` to disable ctrl+n/j/p/k shortcuts. Defaults to `true`.
+   */
+  vimBindings?: boolean
+}
 
 type Context = {
   value: (id: string, value: string, keywords?: string[]) => void
