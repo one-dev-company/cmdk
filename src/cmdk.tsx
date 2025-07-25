@@ -186,22 +186,25 @@ const GroupContext = React.createContext<Group>(undefined)
 
 const Command = React.forwardRef<HTMLDivElement, CommandProps>(
   (props, forwardedRef) => {
-    const state = useLazyRef<State>(() => ({
-      /** Value of the search query. */
-      search: '',
-      /** Currently selected item value. */
-      value: props.value ?? props.defaultValue ?? '',
-      /** Currently selected item id. */
-      selectedItemId: undefined,
-      filtered: {
-        /** The count of all visible items. */
-        count: 0,
-        /** Map from visible item id to its search score. */
-        items: new Map(),
-        /** Set of groups with at least one visible item. */
-        groups: new Set(),
-      },
-    }))
+    const state = useLazyRef<State>(
+      () =>
+        ({
+          /** Value of the search query. */
+          search: '',
+          /** Currently selected item value. */
+          value: props.value ?? props.defaultValue ?? '',
+          /** Currently selected item id. */
+          selectedItemId: undefined,
+          filtered: {
+            /** The count of all visible items. */
+            count: 0,
+            /** Map from visible item id to its search score. */
+            items: new Map(),
+            /** Set of groups with at least one visible item. */
+            groups: new Set(),
+          },
+        }) satisfies State,
+    )
     const allItems = useLazyRef<Set<string>>(() => new Set()) // [...itemIds]
     const allGroups = useLazyRef<Map<string, Set<string>>>(() => new Map()) // groupId → [...itemIds]
     const ids = useLazyRef<Map<string, { value: string; keywords?: string[] }>>(
@@ -296,7 +299,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
         emit: () => {
           listeners.current.forEach((l) => l())
         },
-      }
+      } satisfies Store
     }, [])
 
     const context: Context = React.useMemo(
