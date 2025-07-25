@@ -1,0 +1,61 @@
+{
+  "name": "@odc/cmdk",
+  "version": "1.2.0",
+  "description": "",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src",
+    "dev": "tsup src --watch",
+    "prepublishOnly": "cp ../README.md . && pnpm build",
+    "postpublish": "rm README.md"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.8",
+    "prettier": "3.6.2",
+    "tsup": "8.5.0",
+    "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19"
+  },
+  "packageManager": "pnpm@10.13.1",
+  "homepage": "https://github.com/one-dev-company/cmdk#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/one-dev-company/cmdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/one-dev-company/cmdk/issues"
+  },
+  "author": {
+    "name": "Danilo Barros",
+    "url": "https://github.com/danilobjr"
+  },
+  "keywords": [
+    "react",
+    "command-palette",
+    "command-menu",
+    "radix-ui",
+    "combobox"
+  ],
+  "dependencies": {
+    "@radix-ui/react-compose-refs": "1.1.2",
+    "@radix-ui/react-dialog": "1.1.14",
+    "@radix-ui/react-id": "1.1.1",
+    "@radix-ui/react-primitive": "2.1.3"
+  }
+}

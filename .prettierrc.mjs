@@ -1,0 +1,11 @@
+/**
+ * @see https://prettier.io/docs/configuration
+ * @type {import("prettier").Config}
+ */
+const config = {
+  editorconfig: true,
+  semi: false,
+  singleQuote: true,
+}
+
+export default config
