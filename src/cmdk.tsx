@@ -150,15 +150,20 @@ type ItemId = string
 type Score = number
 type State = {
   search: string
-  value: string
+  value?: string
   selectedItemId?: string
   filtered: { count: number; items: Map<ItemId, Score>; groups: Set<string> }
 }
 
+type SetStateAllowedKeys = Extract<keyof State, 'search' | 'value'>
 type Store = {
   subscribe: (callback: () => void) => () => void
   snapshot: () => State
-  setState: <K extends keyof State>(key: K, value: State[K], opts?: any) => void
+  setState: (
+    key: SetStateAllowedKeys,
+    value?: State[SetStateAllowedKeys] | null,
+    opts?: any,
+  ) => void
   emit: () => void
 }
 
@@ -256,8 +261,9 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
           return state.current
         },
         setState: (key, value, opts) => {
-          if (Object.is(state.current[key], value)) return
-          state.current[key] = value
+          const innerValue = value ?? ''
+          if (Object.is(state.current[key], innerValue)) return
+          state.current[key] = innerValue
 
           if (key === 'search') {
             // Filter synchronously before emitting back to children
@@ -287,7 +293,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
             }
             if (propsRef.current?.value !== undefined) {
               // If controlled, just call the callback instead of updating state internally
-              const newValue = (value ?? '') as string
+              const newValue = innerValue
               propsRef.current.onValueChange?.(newValue)
               return
             }
@@ -466,8 +472,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
       const item = getValidItems().find(
         (item) => item.getAttribute('aria-disabled') !== 'true',
       )
-      const value = item?.getAttribute(VALUE_ATTR)
-      store.setState('value', value || undefined)
+      store.setState('value', item?.getAttribute(VALUE_ATTR))
     }
 
     /** Filters the current items. */
