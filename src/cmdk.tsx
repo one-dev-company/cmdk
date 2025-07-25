@@ -172,6 +172,7 @@ const ITEM_SELECTOR = `[cmdk-item=""]`
 const VALID_ITEM_SELECTOR = `${ITEM_SELECTOR}:not([aria-disabled="true"])`
 const SELECT_EVENT = `cmdk-item-select`
 const VALUE_ATTR = `data-value`
+const INVALID_KEY = 'invalid_key'
 const defaultFilter: CommandFilter = (value, search, keywords) =>
   commandScore(value, search, keywords)
 
@@ -423,7 +424,10 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
         .sort((a, b) => {
           const valueA = a.getAttribute('id')
           const valueB = b.getAttribute('id')
-          return (scores.get(valueB) ?? 0) - (scores.get(valueA) ?? 0)
+          return (
+            (scores.get(valueB ?? INVALID_KEY) ?? 0) -
+            (scores.get(valueA ?? INVALID_KEY) ?? 0)
+          )
         })
         .forEach((item) => {
           const group = item.closest(GROUP_ITEMS_SELECTOR)
