@@ -1132,7 +1132,7 @@ function useLazyRef<T>(fn: () => T) {
     ref.current = fn()
   }
 
-  return ref as React.MutableRefObject<T>
+  return ref as React.RefObject<T>
 }
 
 /** Run a selector against the store state. */
