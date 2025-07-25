@@ -1199,14 +1199,14 @@ function renderChildren(children: React.ReactElement) {
 }
 
 function SlottableWithNestedChildren(
-  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
-  render: (child: React.ReactNode) => JSX.Element,
+  { asChild, children }: React.PropsWithChildren & { asChild?: boolean },
+  render: (child: React.ReactNode) => React.JSX.Element,
 ) {
   if (asChild && React.isValidElement(children)) {
     return React.cloneElement(
       renderChildren(children),
       { ref: (children as any).ref },
-      render(children.props.children),
+      render((children.props as React.PropsWithChildren).children),
     )
   }
   return render(children)
