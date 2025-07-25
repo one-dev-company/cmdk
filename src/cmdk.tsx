@@ -366,11 +366,11 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
           }
         },
         filter: () => {
-          return propsRef.current.shouldFilter
+          return propsRef.current.shouldFilter ?? false
         },
-        label: label || props['aria-label'],
+        label: label ?? props['aria-label'] ?? '',
         getDisablePointerSelection: () => {
-          return propsRef.current.disablePointerSelection
+          return propsRef.current.disablePointerSelection ?? false
         },
         listId,
         inputId,
