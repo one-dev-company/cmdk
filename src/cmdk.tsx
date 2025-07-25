@@ -533,7 +533,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
       )
     }
 
-    function getValidItems() {
+    function getValidItems(): Element[] {
       return Array.from(
         listInnerRef.current?.querySelectorAll(VALID_ITEM_SELECTOR) || [],
       )
@@ -541,13 +541,13 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
 
     /** Setters */
 
-    function updateSelectedToIndex(index: number) {
+    function updateSelectedToIndex(index: number): void {
       const items = getValidItems()
       const item = items[index]
       if (item) store.setState('value', item.getAttribute(VALUE_ATTR))
     }
 
-    function updateSelectedByItem(change: 1 | -1) {
+    function updateSelectedByItem(change: 1 | -1): void {
       const selected = getSelectedItem()
       const items = getValidItems()
       const index = items.findIndex((item) => item === selected)
