@@ -261,8 +261,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
           } else if (key === 'value') {
             // Force focus input or root so accessibility works
             if (
-              document.activeElement.hasAttribute('cmdk-input') ||
-              document.activeElement.hasAttribute('cmdk-root')
+              document.activeElement?.hasAttribute('cmdk-input') ||
+              document.activeElement?.hasAttribute('cmdk-root')
             ) {
               const input = document.getElementById(inputId)
               if (input) input.focus()
@@ -318,7 +318,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
             if (!allGroups.current.has(groupId)) {
               allGroups.current.set(groupId, new Set([id]))
             } else {
-              allGroups.current.get(groupId).add(id)
+              allGroups.current.get(groupId)?.add(id)
             }
           }
 
@@ -404,7 +404,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
 
         // Get the maximum score of the group's items
         let max = 0
-        items.forEach((item) => {
+        items?.forEach((item) => {
           const score = scores.get(item)
           max = Math.max(score, max)
         })
@@ -448,7 +448,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
           const element = listInnerRef.current?.querySelector(
             `${GROUP_SELECTOR}[${VALUE_ATTR}="${encodeURIComponent(group[0])}"]`,
           )
-          element?.parentElement.appendChild(element)
+          element?.parentElement?.appendChild(element)
         })
     }
 
