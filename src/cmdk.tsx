@@ -1,11 +1,13 @@
 'use client'
 
-import * as RadixDialog from '@radix-ui/react-dialog'
 import * as React from 'react'
-import { commandScore } from './command-score'
-import { Primitive } from '@radix-ui/react-primitive'
-import { useId } from '@radix-ui/react-id'
+
 import { composeRefs } from '@radix-ui/react-compose-refs'
+import * as RadixDialog from '@radix-ui/react-dialog'
+import { useId } from '@radix-ui/react-id'
+import { Primitive } from '@radix-ui/react-primitive'
+
+import { commandScore } from './command-score'
 
 type Children = { children?: React.ReactNode }
 type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
