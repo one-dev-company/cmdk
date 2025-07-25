@@ -131,7 +131,7 @@ type CommandProps = Omit<DivProps, 'defaultValue'> & {
   vimBindings?: boolean
 }
 
-type Context = {
+type CommandContext = {
   value: (id: string, value?: string, keywords?: string[]) => void
   item: (id: string, groupId: string) => () => void
   group: (id: string) => () => void
@@ -183,7 +183,7 @@ const INVALID_KEY = 'invalid_key'
 const defaultFilter: CommandFilter = (value, search, keywords) =>
   commandScore(value, search, keywords)
 
-const dummyInitialContext: Context = {
+const dummyInitialCommandContext: CommandContext = {
   label: '',
   value: () => {},
   filter: () => false,
@@ -205,7 +205,9 @@ const dummyInitialGroupContext: Group = {
   id: '',
 }
 
-const CommandContext = React.createContext<Context>(dummyInitialContext)
+const CommandContext = React.createContext<CommandContext>(
+  dummyInitialCommandContext,
+)
 const StoreContext = React.createContext<Store>(dummyInitialStoreContext)
 const GroupContext = React.createContext<Group>(dummyInitialGroupContext)
 const useCommand = () => React.useContext(CommandContext)
@@ -335,7 +337,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
       } satisfies Store
     }, [])
 
-    const context: Context = React.useMemo(
+    const context: CommandContext = React.useMemo(
       () =>
         ({
           // Keep id → {value, keywords} mapping up-to-date
@@ -418,7 +420,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
           inputId,
           labelId,
           listInnerRef,
-        }) satisfies Context,
+        }) satisfies CommandContext,
       [],
     )
 
