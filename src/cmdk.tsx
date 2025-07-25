@@ -1139,11 +1139,11 @@ function useCmdk<T = any>(selector: (state: State) => T): T {
 
 function useValue(
   id: string,
-  ref: React.RefObject<HTMLElement>,
-  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
+  ref: React.RefObject<HTMLElement | null>,
+  deps: (string | React.ReactNode | React.RefObject<HTMLElement | null>)[],
   aliases: string[] = [],
 ) {
-  const valueRef = React.useRef<string>()
+  const valueRef = React.useRef<string>(undefined)
   const context = useCommand()
 
   useLayoutEffect(() => {
@@ -1153,7 +1153,7 @@ function useValue(
           return part.trim()
         }
 
-        if (typeof part === 'object' && 'current' in part) {
+        if (!!part && typeof part === 'object' && 'current' in part) {
           if (part.current) {
             return part.current.textContent?.trim()
           }
@@ -1165,7 +1165,7 @@ function useValue(
     const keywords = aliases.map((alias) => alias.trim())
 
     context.value(id, value, keywords)
-    ref.current?.setAttribute(VALUE_ATTR, value)
+    ref.current?.setAttribute(VALUE_ATTR, value ?? '')
     valueRef.current = value
   })
 
