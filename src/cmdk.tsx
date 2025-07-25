@@ -406,7 +406,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
         // Get the maximum score of the group's items
         let max = 0
         items?.forEach((item) => {
-          const score = scores.get(item)
+          const score: number = scores.get(item) ?? 0
           max = Math.max(score, max)
         })
 
