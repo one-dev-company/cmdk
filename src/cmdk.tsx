@@ -89,7 +89,7 @@ type CommandFilter = (
   keywords?: string[],
 ) => number
 
-type CommandProps = DivProps & {
+type CommandProps = Omit<DivProps, 'defaultValue'> & {
   /**
    * Accessible label for this command menu. Not shown visibly.
    */
