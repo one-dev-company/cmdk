@@ -262,7 +262,9 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
         },
         setState: (key, value, opts) => {
           const innerValue = value ?? ''
-          if (Object.is(state.current[key], innerValue)) return
+          if (Object.is(state.current[key], innerValue)) {
+            return
+          }
           state.current[key] = innerValue
 
           if (key === 'search') {
@@ -277,8 +279,11 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
               document.activeElement?.hasAttribute('cmdk-root')
             ) {
               const input = document.getElementById(inputId)
-              if (input) input.focus()
-              else document.getElementById(listId)?.focus()
+              if (input) {
+                input.focus()
+              } else {
+                document.getElementById(listId)?.focus()
+              }
             }
 
             schedule(7, () => {
@@ -361,7 +366,9 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
 
                 // The item removed have been the selected one,
                 // so selection should be moved to the first
-                if (selectedItem?.getAttribute('id') === id) selectFirstItem()
+                if (selectedItem?.getAttribute('id') === id) {
+                  selectFirstItem()
+                }
 
                 store.emit()
               })
@@ -497,7 +504,9 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
         const keywords = ids.current.get(id)?.keywords ?? []
         const rank = score(value, keywords)
         state.current.filtered.items.set(id, rank)
-        if (rank > 0) itemCount++
+        if (rank > 0) {
+          itemCount++
+        }
       }
 
       // Check which groups have at least 1 item shown
@@ -554,7 +563,9 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
     function updateSelectedToIndex(index: number): void {
       const items = getValidItems()
       const item = items[index]
-      if (item) store.setState('value', item.getAttribute(VALUE_ATTR))
+      if (item) {
+        store.setState('value', item.getAttribute(VALUE_ATTR))
+      }
     }
 
     function updateSelectedByItem(change: 1 | -1): void {
@@ -574,8 +585,9 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
               : items[index + change]
       }
 
-      if (newSelected)
+      if (newSelected) {
         store.setState('value', newSelected.getAttribute(VALUE_ATTR))
+      }
     }
 
     function updateSelectedByGroup(change: 1 | -1): void {
@@ -762,7 +774,10 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
 
     React.useEffect(() => {
       const element = ref.current
-      if (!element || props.disabled) return
+      if (!element || props.disabled) {
+        return
+      }
+
       element.addEventListener(SELECT_EVENT, onSelect)
       return () => element.removeEventListener(SELECT_EVENT, onSelect)
     }, [render, props.onSelect, props.disabled])
@@ -776,7 +791,9 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
       store.setState('value', value.current, true)
     }
 
-    if (!render) return null
+    if (!render) {
+      return null
+    }
 
     const {
       disabled,
@@ -883,7 +900,10 @@ const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(
     const ref = React.useRef<HTMLDivElement>(null)
     const render = useCmdk((state) => !state.search)
 
-    if (!alwaysRender && !render) return null
+    if (!alwaysRender && !render) {
+      return null
+    }
+
     return (
       <Primitive.div
         ref={composeRefs(ref, forwardedRef)}
@@ -1038,7 +1058,10 @@ const Empty = React.forwardRef<HTMLDivElement, EmptyProps>(
   (props, forwardedRef) => {
     const render = useCmdk((state) => state.filtered.count === 0)
 
-    if (!render) return null
+    if (!render) {
+      return null
+    }
+
     return (
       <Primitive.div
         ref={forwardedRef}
@@ -1113,7 +1136,10 @@ function findNextSibling(el: Element, selector: string): Element | null {
   let sibling = el.nextElementSibling
 
   while (sibling) {
-    if (sibling.matches(selector)) return sibling
+    if (sibling.matches(selector)) {
+      return sibling
+    }
+
     sibling = sibling.nextElementSibling
   }
 
@@ -1124,7 +1150,10 @@ function findPreviousSibling(el: Element, selector: string): Element | null {
   let sibling = el.previousElementSibling
 
   while (sibling) {
-    if (sibling.matches(selector)) return sibling
+    if (sibling.matches(selector)) {
+      return sibling
+    }
+
     sibling = sibling.previousElementSibling
   }
 
@@ -1215,11 +1244,17 @@ const useScheduleLayoutEffect = () => {
 function renderChildren(children: React.ReactElement) {
   const childrenType = children.type as any
   // The children is a component
-  if (typeof childrenType === 'function') return childrenType(children.props)
+  if (typeof childrenType === 'function') {
+    return childrenType(children.props)
+  }
   // The children is a component with `forwardRef`
-  else if ('render' in childrenType) return childrenType.render(children.props)
+  else if ('render' in childrenType) {
+    return childrenType.render(children.props)
+  }
   // It's a string, boolean, etc.
-  else return children
+  else {
+    return children
+  }
 }
 
 function SlottableWithNestedChildren(
