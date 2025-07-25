@@ -183,11 +183,33 @@ const INVALID_KEY = 'invalid_key'
 const defaultFilter: CommandFilter = (value, search, keywords) =>
   commandScore(value, search, keywords)
 
-const CommandContext = React.createContext<Context>(undefined)
+const dummyInitialContext: Context = {
+  label: '',
+  value: () => {},
+  filter: () => false,
+  item: () => () => {},
+  group: () => () => {},
+  getDisablePointerSelection: () => false,
+  inputId: '',
+  labelId: '',
+  listId: '',
+  listInnerRef: { current: null },
+}
+const dummyInitialStoreContext: Store = {
+  subscribe: () => () => {},
+  snapshot: () => ({}) as State,
+  setState: () => {},
+  emit: () => {},
+}
+const dummyInitialGroupContext: Group = {
+  id: '',
+}
+
+const CommandContext = React.createContext<Context>(dummyInitialContext)
+const StoreContext = React.createContext<Store>(dummyInitialStoreContext)
+const GroupContext = React.createContext<Group>(dummyInitialGroupContext)
 const useCommand = () => React.useContext(CommandContext)
-const StoreContext = React.createContext<Store>(undefined)
 const useStore = () => React.useContext(StoreContext)
-const GroupContext = React.createContext<Group>(undefined)
 
 const Command = React.forwardRef<HTMLDivElement, CommandProps>(
   (props, forwardedRef) => {
