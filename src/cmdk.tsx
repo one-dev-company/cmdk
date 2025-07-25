@@ -132,7 +132,7 @@ type CommandProps = DivProps & {
 }
 
 type Context = {
-  value: (id: string, value: string, keywords?: string[]) => void
+  value: (id: string, value?: string, keywords?: string[]) => void
   item: (id: string, groupId: string) => () => void
   group: (id: string) => () => void
   filter: () => boolean
@@ -300,7 +300,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
       () => ({
         // Keep id → {value, keywords} mapping up-to-date
         value: (id, value, keywords) => {
-          if (value !== ids.current.get(id)?.value) {
+          if (!!value && value !== ids.current.get(id)?.value) {
             ids.current.set(id, { value, keywords })
             state.current.filtered.items.set(id, score(value, keywords))
             schedule(2, () => {
