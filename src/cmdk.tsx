@@ -535,7 +535,9 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
 
     function getValidItems(): Element[] {
       return Array.from(
-        listInnerRef.current?.querySelectorAll(VALID_ITEM_SELECTOR) || [],
+        !listInnerRef.current
+          ? []
+          : listInnerRef.current.querySelectorAll(VALID_ITEM_SELECTOR),
       )
     }
 
