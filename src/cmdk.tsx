@@ -146,11 +146,13 @@ type Context = {
   listInnerRef: React.RefObject<HTMLDivElement | null>
 }
 
+type ItemId = string
+type Score = number
 type State = {
   search: string
   value: string
   selectedItemId?: string
-  filtered: { count: number; items: Map<string, number>; groups: Set<string> }
+  filtered: { count: number; items: Map<ItemId, Score>; groups: Set<string> }
 }
 
 type Store = {
