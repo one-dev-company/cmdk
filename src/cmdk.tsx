@@ -297,86 +297,87 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
     }, [])
 
     const context: Context = React.useMemo(
-      () => ({
-        // Keep id → {value, keywords} mapping up-to-date
-        value: (id, value, keywords) => {
-          if (!!value && value !== ids.current.get(id)?.value) {
-            ids.current.set(id, { value, keywords })
-            state.current.filtered.items.set(id, score(value, keywords))
-            schedule(2, () => {
-              sort()
-              store.emit()
-            })
-          }
-        },
-        // Track item lifecycle (mount, unmount)
-        item: (id, groupId) => {
-          allItems.current.add(id)
-
-          // Track this item within the group
-          if (groupId) {
-            if (!allGroups.current.has(groupId)) {
-              allGroups.current.set(groupId, new Set([id]))
-            } else {
-              allGroups.current.get(groupId)?.add(id)
+      () =>
+        ({
+          // Keep id → {value, keywords} mapping up-to-date
+          value: (id, value, keywords) => {
+            if (!!value && value !== ids.current.get(id)?.value) {
+              ids.current.set(id, { value, keywords })
+              state.current.filtered.items.set(id, score(value, keywords))
+              schedule(2, () => {
+                sort()
+                store.emit()
+              })
             }
-          }
+          },
+          // Track item lifecycle (mount, unmount)
+          item: (id, groupId) => {
+            allItems.current.add(id)
 
-          // Batch this, multiple items can mount in one pass
-          // and we should not be filtering/sorting/emitting each time
-          schedule(3, () => {
-            filterItems()
-            sort()
-
-            // Could be initial mount, select the first item if none already selected
-            if (!state.current.value) {
-              selectFirstItem()
+            // Track this item within the group
+            if (groupId) {
+              if (!allGroups.current.has(groupId)) {
+                allGroups.current.set(groupId, new Set([id]))
+              } else {
+                allGroups.current.get(groupId)?.add(id)
+              }
             }
 
-            store.emit()
-          })
-
-          return () => {
-            ids.current.delete(id)
-            allItems.current.delete(id)
-            state.current.filtered.items.delete(id)
-            const selectedItem = getSelectedItem()
-
-            // Batch this, multiple items could be removed in one pass
-            schedule(4, () => {
+            // Batch this, multiple items can mount in one pass
+            // and we should not be filtering/sorting/emitting each time
+            schedule(3, () => {
               filterItems()
+              sort()
 
-              // The item removed have been the selected one,
-              // so selection should be moved to the first
-              if (selectedItem?.getAttribute('id') === id) selectFirstItem()
+              // Could be initial mount, select the first item if none already selected
+              if (!state.current.value) {
+                selectFirstItem()
+              }
 
               store.emit()
             })
-          }
-        },
-        // Track group lifecycle (mount, unmount)
-        group: (id) => {
-          if (!allGroups.current.has(id)) {
-            allGroups.current.set(id, new Set())
-          }
 
-          return () => {
-            ids.current.delete(id)
-            allGroups.current.delete(id)
-          }
-        },
-        filter: () => {
-          return propsRef.current.shouldFilter ?? false
-        },
-        label: label ?? props['aria-label'] ?? '',
-        getDisablePointerSelection: () => {
-          return propsRef.current.disablePointerSelection ?? false
-        },
-        listId,
-        inputId,
-        labelId,
-        listInnerRef,
-      }),
+            return () => {
+              ids.current.delete(id)
+              allItems.current.delete(id)
+              state.current.filtered.items.delete(id)
+              const selectedItem = getSelectedItem()
+
+              // Batch this, multiple items could be removed in one pass
+              schedule(4, () => {
+                filterItems()
+
+                // The item removed have been the selected one,
+                // so selection should be moved to the first
+                if (selectedItem?.getAttribute('id') === id) selectFirstItem()
+
+                store.emit()
+              })
+            }
+          },
+          // Track group lifecycle (mount, unmount)
+          group: (id) => {
+            if (!allGroups.current.has(id)) {
+              allGroups.current.set(id, new Set())
+            }
+
+            return () => {
+              ids.current.delete(id)
+              allGroups.current.delete(id)
+            }
+          },
+          filter: () => {
+            return propsRef.current.shouldFilter ?? false
+          },
+          label: label ?? props['aria-label'] ?? '',
+          getDisablePointerSelection: () => {
+            return propsRef.current.disablePointerSelection ?? false
+          },
+          listId,
+          inputId,
+          labelId,
+          listInnerRef,
+        }) satisfies Context,
       [],
     )
 
