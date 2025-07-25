@@ -44,7 +44,7 @@ type ListProps = DivProps & {
   label?: string
 }
 
-type ItemProps = Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
+type ItemProps = Omit<DivProps, 'onSelect'> & {
   /** Whether this item is currently disabled. */
   disabled?: boolean
   /** Event handler for when this item is selected, either via click or keyboard selection. */
@@ -60,7 +60,7 @@ type ItemProps = Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
   forceMount?: boolean
 }
 
-type GroupProps = Omit<DivProps, 'heading' | 'value'> & {
+type GroupProps = DivProps & {
   /** Optional heading to render for this group. */
   heading?: React.ReactNode
   /** If no heading is provided, you must provide a value that is unique for this group. */
