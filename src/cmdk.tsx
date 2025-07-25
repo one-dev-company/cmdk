@@ -495,7 +495,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
       // Check which groups have at least 1 item shown
       for (const [groupId, group] of allGroups.current) {
         for (const itemId of group) {
-          if (state.current.filtered.items.get(itemId) > 0) {
+          const score = state.current.filtered.items.get(itemId) ?? 0
+          if (score > 0) {
             state.current.filtered.groups.add(groupId)
             break
           }
@@ -524,9 +525,11 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
 
     /** Getters */
 
-    function getSelectedItem() {
-      return listInnerRef.current?.querySelector(
-        `${ITEM_SELECTOR}[aria-selected="true"]`,
+    function getSelectedItem(): Element | null {
+      return (
+        listInnerRef.current?.querySelector(
+          `${ITEM_SELECTOR}[aria-selected="true"]`,
+        ) ?? null
       )
     }
 
@@ -565,17 +568,17 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
         store.setState('value', newSelected.getAttribute(VALUE_ATTR))
     }
 
-    function updateSelectedByGroup(change: 1 | -1) {
+    function updateSelectedByGroup(change: 1 | -1): void {
       const selected = getSelectedItem()
-      let group = selected?.closest(GROUP_SELECTOR)
-      let item: HTMLElement
+      let group = selected?.closest(GROUP_SELECTOR) ?? null
+      let item: HTMLElement | null = null
 
-      while (group && !item) {
+      while (!!group && !item) {
         group =
           change > 0
             ? findNextSibling(group, GROUP_SELECTOR)
             : findPreviousSibling(group, GROUP_SELECTOR)
-        item = group?.querySelector(VALID_ITEM_SELECTOR)
+        item = group && group.querySelector(VALID_ITEM_SELECTOR)
       }
 
       if (item) {
@@ -744,7 +747,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
           ? true
           : !state.search
             ? true
-            : state.filtered.items.get(id) > 0,
+            : (state.filtered.items.get(id) ?? 0 > 0),
     )
 
     React.useEffect(() => {
@@ -756,7 +759,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
 
     function onSelect() {
       select()
-      propsRef.current.onSelect?.(value.current)
+      !!value.current && propsRef.current.onSelect?.(value.current)
     }
 
     function select() {
@@ -1096,22 +1099,26 @@ export { Loading as CommandLoading }
  *
  */
 
-function findNextSibling(el: Element, selector: string) {
+function findNextSibling(el: Element, selector: string): Element | null {
   let sibling = el.nextElementSibling
 
   while (sibling) {
     if (sibling.matches(selector)) return sibling
     sibling = sibling.nextElementSibling
   }
+
+  return null
 }
 
-function findPreviousSibling(el: Element, selector: string) {
+function findPreviousSibling(el: Element, selector: string): Element | null {
   let sibling = el.previousElementSibling
 
   while (sibling) {
     if (sibling.matches(selector)) return sibling
     sibling = sibling.previousElementSibling
   }
+
+  return null
 }
 
 function useAsRef<T>(data: T) {
