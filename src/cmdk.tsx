@@ -1126,7 +1126,7 @@ const useLayoutEffect =
   typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
 
 function useLazyRef<T>(fn: () => T) {
-  const ref = React.useRef<T>()
+  const ref = React.useRef<T>(undefined)
 
   if (ref.current === undefined) {
     ref.current = fn()
