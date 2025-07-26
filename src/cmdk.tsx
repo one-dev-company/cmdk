@@ -91,6 +91,10 @@ type CommandFilter = (
 
 type CommandProps = Omit<DivProps, 'defaultValue'> & {
   /**
+   * Set a custom id on `[cmdk-input]` and for attribute on `[cmdk-label]`.
+   */
+  id?: string
+  /**
    * Accessible label for this command menu. Not shown visibly.
    */
   label?: string
@@ -242,6 +246,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
     const listeners = useLazyRef<Set<() => void>>(() => new Set()) // [...rerenders]
     const propsRef = useAsRef(props)
     const {
+      id: idProp,
       label,
       children,
       value,
@@ -302,7 +307,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
               document.activeElement?.hasAttribute('cmdk-input') ||
               document.activeElement?.hasAttribute('cmdk-root')
             ) {
-              const input = document.getElementById(inputId)
+              const input = document.getElementById(idProp ?? inputId)
               if (input) {
                 input.focus()
               } else {
@@ -417,7 +422,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
             return propsRef.current.disablePointerSelection ?? false
           },
           listId,
-          inputId,
+          inputId: idProp ?? inputId,
           labelId,
           listInnerRef,
         }) satisfies CommandContext,
