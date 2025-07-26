@@ -91,7 +91,7 @@ type CommandFilter = (
 
 type CommandProps = Omit<DivProps, 'defaultValue'> & {
   /**
-   * Set a custom id on `[cmdk-input]` and for attribute on `[cmdk-label]`.
+   * Custom id on `[cmdk-input]` and for attribute on `[cmdk-label]`.
    */
   id?: string
   /**
