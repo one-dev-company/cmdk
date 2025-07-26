@@ -99,6 +99,10 @@ type CommandProps = Omit<DivProps, 'defaultValue'> & {
    */
   label?: string
   /**
+   * If set to `true`, the accessible label for this command menu won't be rendered.
+   */
+  noLabel?: boolean
+  /**
    * Optionally set to `false` to turn off the automatic filtering and sorting.
    * If `false`, you must conditionally render valid items based on the search query yourself.
    */
@@ -248,6 +252,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
     const {
       id: idProp,
       label,
+      noLabel = false,
       children,
       value,
       onValueChange,
@@ -739,15 +744,17 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
           }
         }}
       >
-        <label
-          cmdk-label=""
-          htmlFor={context.inputId}
-          id={context.labelId}
-          // Screen reader only
-          style={srOnlyStyles}
-        >
-          {label}
-        </label>
+        {!noLabel && (
+          <label
+            cmdk-label=""
+            htmlFor={context.inputId}
+            id={context.labelId}
+            // Screen reader only
+            style={srOnlyStyles}
+          >
+            {label}
+          </label>
+        )}
         {SlottableWithNestedChildren(props, (child) => (
           <StoreContext.Provider value={store}>
             <CommandContext.Provider value={context}>
