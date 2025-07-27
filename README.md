@@ -2,7 +2,7 @@
 
 > **Note**
 >
-> This is a fork of amazing [cmdk](https://github.com/pacocoursey/cmdk). I saw some issues, PRs and discussions not answered in a while, so I forked because I need some extra features. I hope this fork has a short life and they return soon.
+> This is a fork of amazing [cmdk](https://github.com/pacocoursey/cmdk). In their repository, I saw some issues, PRs and discussions not answered in a while, so I decided to fork because I needed some extra features.
 
 _@onedevcompany/cmdk_ is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup>[How?](/ARCHITECTURE.md)</sup>, so you can wrap items in other components or even as static JSX.
 
