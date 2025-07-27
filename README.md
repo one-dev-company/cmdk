@@ -14,7 +14,7 @@ Demo and examples: for now, this fork has no website.
 pnpm install @onedevcompany/cmdk
 ```
 
-For me, this is a long name and imports like below are a bit anoying to type.
+For me, this is a long name and imports like below are a bit anoying to type even with intellisense.
 
 ```ts
 import { Command } from '@onedevcompany/cmdk'
@@ -26,7 +26,7 @@ So just use an alias.
 pnpm install cmdk@npm:@onedevcompany/cmdk
 ```
 
-And...
+And... 🎉
 
 ```ts
 import { Command } from 'cmdk'
