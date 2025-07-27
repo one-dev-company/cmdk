@@ -1,23 +1,23 @@
-# @odc/cmdk [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/@odc/cmdk)](https://www.npmjs.com/package/@odc/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/@odc/cmdk.svg?colorB=green)](https://www.npmjs.com/package/@odc/cmdk)
+# @onedevcompany/cmdk [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/@onedevcompany/cmdk)](https://www.npmjs.com/package/@onedevcompany/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/@onedevcompany/cmdk.svg?colorB=green)](https://www.npmjs.com/package/@onedevcompany/cmdk)
 
 > **Note**
 >
 > This is a fork of amazing [cmdk](https://github.com/pacocoursey/cmdk). I saw some issues, PRs and discussions not answered in a while, so I forked because I need some extra features. I hope this fork has a short life and they return soon.
 
-_@odc/cmdk_ is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup>[How?](/ARCHITECTURE.md)</sup>, so you can wrap items in other components or even as static JSX.
+_@onedevcompany/cmdk_ is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup>[How?](/ARCHITECTURE.md)</sup>, so you can wrap items in other components or even as static JSX.
 
 Demo and examples: for now, this fork has no website.
 
 ## Install
 
 ```bash
-pnpm install @odc/cmdk
+pnpm install @onedevcompany/cmdk
 ```
 
 ## Use
 
 ```tsx
-import { Command } from '@odc/cmdk'
+import { Command } from '@onedevcompany/cmdk'
 
 const CommandMenu = () => {
   return (
@@ -43,7 +43,7 @@ const CommandMenu = () => {
 Or in a dialog:
 
 ```tsx
-import { Command } from '@odc/cmdk'
+import { Command } from '@onedevcompany/cmdk'
 
 const CommandMenu = () => {
   const [open, setOpen] = React.useState(false)
@@ -511,7 +511,7 @@ Written originally by Paco ([@pacocoursey](https://twitter.com/pacocoursey)) in 
 
 [use-descendants](https://github.com/pacocoursey/use-descendants) was extracted from the 2019 version.
 
-Now this is a fork called `@odc/cmdk` with some new features.
+Now this is a fork called `@onedevcompany/cmdk` with some new features.
 
 ## Scripts
 
