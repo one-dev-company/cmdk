@@ -14,6 +14,24 @@ Demo and examples: for now, this fork has no website.
 pnpm install @onedevcompany/cmdk
 ```
 
+For me, this is a long name and imports like below are a bit anoying to type.
+
+```ts
+import { Command } from '@onedevcompany/cmdk'
+```
+
+So just use an alias.
+
+```bash
+pnpm install cmdk@npm:@onedevcompany/cmdk
+```
+
+And...
+
+```ts
+import { Command } from 'cmdk'
+```
+
 ## Use
 
 ```tsx
