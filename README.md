@@ -174,32 +174,23 @@ You can make the arrow keys wrap around the list (when you reach the end, it goe
 <Command loop />
 ```
 
-For this command menu, we render an internal label element `[cmdk-label]` for sake of accessibility. but it's not shown visibly. This label is linked to the [Input](#input) via label `for` and input `id`. The `id` is generated internally, but if you want to use `Command` as a combobox with inline search input, an external label element, and a custom `id` in search input `[cmdk-input]`, you can.
-
-Set `id` prop:
+What about the `id` of search input? It's automatically generated internally, but you cen set a custom one by setting `id` prop on `Command`.
 
 ```tsx
-import { Label } from './my-custom-components/label'
-
-...
-
-<div>
-  <Label htmlForm="users">Users</Label>
-  <Command id="users">
-    <Command.Input />
-    {/* ... */}
-  </Command>
-</div>
+<Command id="users">
+  <Command.Input />
+  {/* ... */}
+</Command>
 ```
 
-You have an external label, so let's rip the internal label off by adding `noLabel` prop:
+If you have an external label, just rip the internal label off by adding `noLabel` prop:
 
 ```tsx
 import { Label } from './my-custom-components/label'
 
 ...
 
-<div>
+<div className="space-y-2">
   <Label htmlForm="users">Users</Label>
   <Command id="users" noLabel>
     <Command.Input />
@@ -207,6 +198,8 @@ import { Label } from './my-custom-components/label'
   </Command>
 </div>
 ```
+
+The internal label only exists to keep accessibility principles. When rederend is not shown visibly. And if you have an external one, there's no need to render the internal. Thus you don't have two `htmlFor` pointing to the input search `id`.
 
 ### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
 
