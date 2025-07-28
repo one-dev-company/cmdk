@@ -186,12 +186,12 @@ What about the `id` of search input? It's automatically generated internally, bu
 If you have an external label, just rip the internal label off by adding `noLabel` prop:
 
 ```tsx
-import { Label } from './my-custom-components/label'
+import { AccessibleLabel } from './my-custom-components/label'
 
 ...
 
 <div className="space-y-2">
-  <Label htmlForm="users">Users</Label>
+  <AccessibleLabel htmlForm="users">Users</AccessibleLabel>
   <Command id="users" noLabel>
     <Command.Input />
     {/* ... */}
@@ -199,7 +199,7 @@ import { Label } from './my-custom-components/label'
 </div>
 ```
 
-The internal label only exists to keep accessibility principles. When rederend is not shown visibly. And if you have an external one, there's no need to render the internal. Thus you don't have two `htmlFor` pointing to the input search `id`.
+The internal label only exists to keep accessibility principles. When rendered, is not shown visibly. And if you have an external label, there's no need to render the internal one. Thus you don't have two `htmlFor` pointing to the `id` search input.
 
 ### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
 
